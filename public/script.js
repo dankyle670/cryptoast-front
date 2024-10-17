@@ -107,7 +107,7 @@ async function createChartForToken(token, ctx) {
     const endDate = Math.floor(Date.now() / 1000); // Temps actuel en secondes
     const startDate = endDate - (60 * 60 * 24 * 60); // 60 jours en secondes
 
-    const proxyUrl = 'http://localhost:3000/proxy?url='; // URL de ton proxy local
+    const proxyUrl = 'https://cryptoast-server.netlify.app'; // URL de ton proxy local
     const apiUrl = encodeURIComponent(`https://api.coingecko.com/api/v3/coins/${token}/market_chart/range?vs_currency=usd&from=${startDate}&to=${endDate}`);
 
     try {
@@ -139,7 +139,7 @@ async function fetchHistoricalData() {
     const endDate = Math.floor(Date.now() / 1000); // Temps actuel en secondes
     const startDate = endDate - (60 * 60 * 24 * 60); // 60 jours en secondes
 
-    const proxyUrl = 'http://localhost:3000/proxy?url='; // URL de ton proxy local
+    const proxyUrl = 'https://cryptoast-server.netlify.app'; // URL de ton proxy local
 
     const promises = tokens.map(async (token) => {
         try {
