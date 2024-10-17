@@ -1,6 +1,6 @@
 let charts = {};
 
-// Fonction pour afficher le résumé des tokens
+// create summary function
 function showSummary(token) {
     const allSummaries = document.querySelectorAll('.summary');
     allSummaries.forEach(summary => {
@@ -28,7 +28,7 @@ function showSummary(token) {
     summary.style.display = 'block';
 }
 
-// handling black and white mode function
+// handling balck and white mode function
 function toggleMode()
 {
     const body = document.body;
@@ -38,9 +38,13 @@ function toggleMode()
     button.innerText = isBlackAndWhite ? 'Mode Clair' : 'Mode Sombre';
 }
 
-// create my chart function
-function createChart(ctx, label, data, color) {
-    return new Chart(ctx, {
+// create chart function
+function createChart(ctx, label, data, color, token)
+{
+    if (charts[token])
+        charts[token].destroy();
+
+    charts[token] = new Chart(ctx, {
         type: 'line',
         data: {
             labels: label,
@@ -75,8 +79,9 @@ function createChart(ctx, label, data, color) {
     });
 }
 
-// handling display of the the token
-function showTokensSequentially() {
+// display token function 
+function showTokensSequentially()
+{
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
     tokens.forEach((token, index) => {
         const tokenElement = document.getElementById(token);
@@ -87,8 +92,9 @@ function showTokensSequentially() {
     });
 }
 
-// handling display of the charts
-function showChartsSequentially() {
+// display charts function
+function showChartsSequentially()
+{
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
     tokens.forEach((token, index) => {
         setTimeout(() => {
@@ -100,36 +106,41 @@ function showChartsSequentially() {
     });
 }
 
-// create charts function
+// create charts for each token function
 async function createChartForToken(token, ctx)
 {
     const endDate = Math.floor(Date.now() / 1000);
-    const startDate = endDate - (60 * 60 * 24 * 60);
+    const startDate = endDate - (60 * 60 * 24 * 60); // 60 day in sec
+
     const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url=';
     const apiUrl = encodeURIComponent(`https://api.coingecko.com/api/v3/coins/${token}/market_chart/range?vs_currency=usd&from=${startDate}&to=${endDate}`);
 
     try {
         const response = await fetch(`${proxyUrl}${apiUrl}`);
         const data = await response.json();
+
         if (!data.prices) {
             console.error(`Pas de données reçues pour ${token}`);
             return;
         }
+
         const prices = data.prices.map(price => ({
             timestamp: new Date(price[0]).toLocaleDateString(),
             value: price[1]
         }));
+
         const labels = prices.map(price => price.timestamp);
         const values = prices.map(price => price.value);
-        createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green');
+
+        createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green', token);
     } catch (error) {
         console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
     }
 }
 
-// getting the stats from coingecko
-async function fetchHistoricalData() {
-
+// getting stats from coingecko api
+async function fetchHistoricalData()
+{
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
     const endDate = Math.floor(Date.now() / 1000);
     const startDate = endDate - (60 * 60 * 24 * 60);
@@ -145,17 +156,14 @@ async function fetchHistoricalData() {
                 console.error(`Pas de données reçues pour ${token}`);
                 return;
             }
-
             const prices = data.prices.map(price => ({
                 timestamp: new Date(price[0]).toLocaleDateString(),
                 value: price[1]
             }));
-
             const labels = prices.map(price => price.timestamp);
             const values = prices.map(price => price.value);
-
             const ctx = document.getElementById(`${token}Chart`).getContext('2d');
-            createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green');
+            createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green', token);
         } catch (error) {
             console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
         }
@@ -164,12 +172,11 @@ async function fetchHistoricalData() {
 }
 
 window.onload = function() {
-
     showTokensSequentially();
     setTimeout(() => {
         showChartsSequentially();
     }, 1500);
 
-    // refresh every min
+    // refresh each min
     setInterval(fetchHistoricalData, 60000);
 };
