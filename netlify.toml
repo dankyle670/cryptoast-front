@@ -1,0 +1,2 @@
+[build]
+  publish = "public"  # Le dossier contenant les fichiers à déployer
