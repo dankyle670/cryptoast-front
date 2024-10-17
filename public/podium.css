@@ -1,65 +1,65 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4; /* Couleur de fond pour le mode clair */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Ajout de la transition de couleur du texte */
-    color: black; /* Couleur par défaut pour le texte */
+    background-color: #f4f4f4;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: black;
 }
 
 .title {
-    text-align: center; /* Centre le texte */
-    margin-top: 20px; /* Marge supérieure pour l'espacement */
+    text-align: center;
+    margin-top: 20px;
 }
 
 .title h1 {
-    font-size: 36px; /* Taille de police pour le titre */
-    color: black; /* Couleur du texte en mode clair */
-    margin-bottom: 20px; /* Marge inférieure pour espacer avec le podium */
-    font-weight: bold; /* Mettre le texte en gras */
-    transition: color 0.3s ease; /* Transition de couleur pour le mode sombre */
+    font-size: 36px;
+    color: black;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
 .mode-toggle {
-    position: absolute; /* Positionner le bouton en haut à droite */
-    top: 20px; /* Distance du haut */
-    right: 20px; /* Distance de la droite */
-    z-index: 100; /* Assurez-vous que le bouton est au-dessus des autres éléments */
-    font-size: 24px; /* Taille du texte */
-    cursor: pointer; /* Curseur de pointeur pour le bouton */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .podium {
     display: flex;
     justify-content: space-around;
     padding: 20px;
-    flex-wrap: wrap; /* Permet au podium de s'adapter à la taille de l'écran */
+    flex-wrap: wrap;
 }
 
 .podium-item {
-    width: 30%; /* Largeur pour écran normal */
-    height: 300px; /* Augmenter la hauteur des podiums */
+    width: 30%;
+    height: 300px;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Aligner les éléments en haut */
+    justify-content: flex-start;
     position: relative;
     cursor: pointer;
     border-radius: 10px;
     background-size: cover;
     background-position: center;
-    padding: 20px; /* Pour éviter que le texte soit collé au bord */
-    text-align: center; /* Centre le texte */
-    margin-bottom: 20px; /* Ajoute de l'espace entre les éléments */
-    margin-top: 20px; /* Ajoute de l'espace au-dessus de chaque élément */
-    transition: transform 0.3s ease; /* Animation au survol */
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    transition: transform 0.3s ease;
 }
 
 .podium-item .cryptocurrency-name {
-    margin-top: 60px; /* Descendre les noms des cryptomonnaies */
+    margin-top: 60px;
 }
 
 .podium-item:hover {
-    transform: scale(1.05); /* Agrandissement au survol */
+    transform: scale(1.1);
 }
 
 .podium-item.gold {
@@ -77,96 +77,94 @@ body {
 .summary {
     margin-top: 10px;
     padding: 10px;
-    background-color: black; /* Couleur de fond noire pour le résumé */
+    background-color: black;
     border-radius: 5px;
-    width: 90%; /* Ajustez la largeur selon vos besoins */
-    margin: 0 auto; /* Centrer le résumé à l'intérieur du token */
-    text-align: left; /* Aligner le texte à gauche */
-    display: none; /* Masquer par défaut */
+    width: 90%;
+    margin: 0 auto;
+    text-align: left;
+    display: none;
 }
 
-/* Styles pour le mode sombre */
+/* back mode style */
 body.black-and-white {
-    background-color: black; /* Fond noir */
-    color: white; /* Texte blanc */
-    transition: background-color 0.3s ease, color 0.3s ease; /* Transition en mode sombre */
+    background-color: black;
+    color: white;
+    transition: background-color 0.6s ease, color 0.6s ease;
 }
 
 .podium-item.black-and-white {
-    background-color: #444; /* Arrière-plan gris foncé pour les items en mode sombre */
-    color: white; /* Texte blanc */
+    background-color: #444;
+    color: white;
 }
 
-/* Styles pour le rang */
+/* rank style */
 .rank {
-    font-size: 24px; /* Taille de police pour le rang */
-    font-weight: bold; /* Mettre le texte en gras */
+    font-size: 24px;
+    font-weight: bold;
     position: absolute;
-    top: 10px; /* Positionner en haut de l'item */
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
-    color: #fff; /* Couleur par défaut */
+    color: #fff;
 }
 
-/* Couleurs spécifiques pour les rangs */
+/* rank color  */
 .podium-item.gold .rank {
-    color: white; /* Couleur pour la 1ère place */
+    color: white;
 }
 
 .podium-item.silver .rank {
-    color: white; /* Couleur pour la 2ème place */
+    color: white;
 }
 
 .podium-item.bronze .rank {
-    color: white; /* Couleur pour la 3ème place (bronze) */
+    color: white;
 }
 
 .mode-toggle button {
-    background-color: aqua; /* Couleur de fond du bouton */
-    color: white; /* Couleur du texte */
+    background-color: aqua;
+    color: white;
     border: none;
     border-radius: 5px;
-    padding: 10px 15px; /* Padding pour le bouton */
-    cursor: pointer; /* Curseur de pointeur pour le bouton */
-    transition: background-color 0.3s ease; /* Transition de couleur du bouton */
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .mode-toggle button:hover {
-    background-color: aqua; /* Couleur du bouton au survol */
+    background-color: rgb(149, 223, 223);
 }
 
-/* Style pour les noms des cryptomonnaies */
 .cryptocurrency-name {
     font-size: 20px;
     font-weight: bold;
-    color: black; /* Couleur par défaut en mode clair */
+    color: black;
 }
 
-/* Styles pour le mode sombre */
+/* black mode style */
 body.black-and-white .cryptocurrency-name {
-    color: beige; /* Couleur beige pour le mode sombre */
+    color: beige;
 }
 
-/* Style pour le titre en fonction du mode */
+/* handling title based on the mode */
 .title h1 {
     font-size: 36px;
     margin-bottom: 20px;
     font-weight: bold;
-    color: black; /* Par défaut, le texte est noir en mode clair */
-    transition: color 0.3s ease; /* Transition pour le mode sombre */
+    color: black;
+    transition: color 0.3s ease;
 }
 
-/* Quand le mode sombre est activé */
 body.black-and-white .title h1 {
-    color: beige; /* Le texte devient beige en mode sombre */
+    color: beige;
 }
-
+/* separator style */
 .separator {
     border: none;
     height: 5px;
-    background-color: #ccc; /* Couleur du trait */
-    margin: 50px 0; /* Espace au-dessus et en dessous du trait */
-    width: 80%; /* Largeur du trait */
+    background-color: #ccc;
+    margin: 50px 0;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }
@@ -178,20 +176,18 @@ body.black-and-white .title h1 {
 }
 
 .charts-section canvas {
-    width: 100% !important; /* Assure que le canvas prend toute la largeur */
-    height: 400px !important; /* Garde l'aspect ratio */
-    max-width: 600px; /* Limite la largeur maximale si nécessaire */
-    margin: 20px auto; /* Centrer le canvas */
+    width: 100% !important;
+    height: 400px !important;
+    max-width: 600px;
+    margin: 20px auto;
 }
 
-/* Ajout pour cacher les éléments au départ */
 .hidden {
     opacity: 0;
     transform: translateY(50px);
     transition: opacity 0.5s, transform 0.5s;
 }
 
-/* Affichage progressif */
 .show {
     opacity: 1;
     transform: translateY(0);

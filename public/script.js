@@ -1,4 +1,4 @@
-let charts = {}; // Objet pour stocker les graphiques
+let charts = {};
 
 // Fonction pour afficher le résumé des tokens
 function showSummary(token) {
@@ -25,22 +25,20 @@ function showSummary(token) {
             <p>Ripple est une plateforme qui vise à faciliter les paiements internationaux rapides et à faible coût.</p>
         `;
     }
-
     summary.style.display = 'block';
 }
 
-// Fonction pour basculer entre le mode clair et sombre
-function toggleMode() {
+// handling black and white mode function
+function toggleMode()
+{
     const body = document.body;
     body.classList.toggle('black-and-white');
-
     const button = document.getElementById('toggleButton');
     const isBlackAndWhite = body.classList.contains('black-and-white');
-
     button.innerText = isBlackAndWhite ? 'Mode Clair' : 'Mode Sombre';
 }
 
-// Fonction pour créer un graphique
+// create my chart function
 function createChart(ctx, label, data, color) {
     return new Chart(ctx, {
         type: 'line',
@@ -77,7 +75,7 @@ function createChart(ctx, label, data, color) {
     });
 }
 
-// Fonction pour afficher les tokens un par un
+// handling display of the the token
 function showTokensSequentially() {
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
     tokens.forEach((token, index) => {
@@ -85,11 +83,11 @@ function showTokensSequentially() {
         setTimeout(() => {
             tokenElement.classList.remove('hidden');
             tokenElement.classList.add('show');
-        }, index * 500); // Ajoute 500ms de délai pour chaque token
+        }, index * 500);
     });
 }
 
-// Fonction pour afficher les graphiques un par un
+// handling display of the charts
 function showChartsSequentially() {
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
     tokens.forEach((token, index) => {
@@ -98,48 +96,44 @@ function showChartsSequentially() {
             createChartForToken(token, ctx);
             document.getElementById(`${token}Chart`).classList.remove('hidden');
             document.getElementById(`${token}Chart`).classList.add('show');
-        }, index * 1000); // Ajoute 1000ms de délai pour chaque graphique
+        }, index * 500);
     });
 }
 
-// Fonction pour créer les graphiques par token
-async function createChartForToken(token, ctx) {
-    const endDate = Math.floor(Date.now() / 1000); // Temps actuel en secondes
-    const startDate = endDate - (60 * 60 * 24 * 60); // 60 jours en secondes
-
-    const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url='; // URL de ton proxy local
+// create charts function
+async function createChartForToken(token, ctx)
+{
+    const endDate = Math.floor(Date.now() / 1000);
+    const startDate = endDate - (60 * 60 * 24 * 60);
+    const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url=';
     const apiUrl = encodeURIComponent(`https://api.coingecko.com/api/v3/coins/${token}/market_chart/range?vs_currency=usd&from=${startDate}&to=${endDate}`);
 
     try {
         const response = await fetch(`${proxyUrl}${apiUrl}`);
         const data = await response.json();
-
         if (!data.prices) {
             console.error(`Pas de données reçues pour ${token}`);
             return;
         }
-
         const prices = data.prices.map(price => ({
             timestamp: new Date(price[0]).toLocaleDateString(),
             value: price[1]
         }));
-
         const labels = prices.map(price => price.timestamp);
         const values = prices.map(price => price.value);
-
         createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green');
     } catch (error) {
         console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
     }
 }
 
-// Récupérer les données historiques pour les graphiques
+// getting the stats from coingecko
 async function fetchHistoricalData() {
-    const tokens = ['bitcoin', 'ethereum', 'ripple'];
-    const endDate = Math.floor(Date.now() / 1000); // Temps actuel en secondes
-    const startDate = endDate - (60 * 60 * 24 * 60); // 60 jours en secondes
 
-    const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url='; // URL de ton proxy local
+    const tokens = ['bitcoin', 'ethereum', 'ripple'];
+    const endDate = Math.floor(Date.now() / 1000);
+    const startDate = endDate - (60 * 60 * 24 * 60);
+    const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url=';
 
     const promises = tokens.map(async (token) => {
         try {
@@ -166,21 +160,16 @@ async function fetchHistoricalData() {
             console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
         }
     });
-
-    // Attendre que toutes les promesses soient terminées
     await Promise.all(promises);
 }
 
-// Charger les données historiques lors du chargement de la page
 window.onload = function() {
-    // D'abord, montrer les tokens
-    showTokensSequentially();
 
-    // Ensuite, après un petit délai, montrer les graphiques
+    showTokensSequentially();
     setTimeout(() => {
         showChartsSequentially();
-    }, 1000); // Attends 2 secondes après l'affichage des tokens avant de montrer les graphiques
+    }, 1500);
 
-    // Actualisation des données toutes les 60 secondes
-    setInterval(fetchHistoricalData, 60000); // 60000 millisecondes = 1 minute
+    // refresh every min
+    setInterval(fetchHistoricalData, 60000);
 };
