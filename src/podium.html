@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Meilleures Cryptomonnaies Actuelles</title>
+    <link rel="stylesheet" href="podium.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="mode-toggle">
+        <button id="toggleButton" onclick="toggleMode()">Mode Sombre</button>
+    </div>
+    <div class="title">
+        <h1>Les Meilleures Cryptomonnaies Actuelles</h1>
+        <hr class="separator">
+    </div>
+    <div class="podium">
+        <div class="podium-item gold hidden" id="bitcoin" onclick="showSummary('bitcoin')">
+            <h2 class="rank">1</h2>
+            <p class="cryptocurrency-name">Bitcoin (BTC)</p>
+            <div class="summary" id="summary-bitcoin" style="display: none;"></div>
+        </div>
+        <div class="podium-item silver hidden" id="ethereum" onclick="showSummary('ethereum')">
+            <h2 class="rank">2</h2>
+            <p class="cryptocurrency-name">Ethereum (ETH)</p>
+            <div class="summary" id="summary-ethereum" style="display: none;"></div>
+        </div>
+        <div class="podium-item bronze hidden" id="ripple" onclick="showSummary('ripple')">
+            <h2 class="rank">3</h2>
+            <p class="cryptocurrency-name">Ripple (XRP)</p>
+            <div class="summary" id="summary-ripple" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- graphic section  -->
+    <div class="charts-section">
+        <div class="title">
+            <h1>Graphiques de Popularité en Temps Réel</h1>
+        </div>
+        <div class="podium">
+            <canvas class="podium-item gold hidden" id="bitcoinChart"></canvas>
+            <canvas class="podium-item silver hidden" id="ethereumChart"></canvas>
+            <canvas class="podium-item bronze hidden" id="rippleChart"></canvas>
+        </div>
+    </div>
+
+    <hr class="separator">
+    <script src="script.js"></script>
+</body>
+</html>

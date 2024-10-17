@@ -1,0 +1,199 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Couleur de fond pour le mode clair */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Ajout de la transition de couleur du texte */
+    color: black; /* Couleur par défaut pour le texte */
+}
+
+.title {
+    text-align: center; /* Centre le texte */
+    margin-top: 20px; /* Marge supérieure pour l'espacement */
+}
+
+.title h1 {
+    font-size: 36px; /* Taille de police pour le titre */
+    color: black; /* Couleur du texte en mode clair */
+    margin-bottom: 20px; /* Marge inférieure pour espacer avec le podium */
+    font-weight: bold; /* Mettre le texte en gras */
+    transition: color 0.3s ease; /* Transition de couleur pour le mode sombre */
+}
+
+.mode-toggle {
+    position: absolute; /* Positionner le bouton en haut à droite */
+    top: 20px; /* Distance du haut */
+    right: 20px; /* Distance de la droite */
+    z-index: 100; /* Assurez-vous que le bouton est au-dessus des autres éléments */
+    font-size: 24px; /* Taille du texte */
+    cursor: pointer; /* Curseur de pointeur pour le bouton */
+}
+
+.podium {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    flex-wrap: wrap; /* Permet au podium de s'adapter à la taille de l'écran */
+}
+
+.podium-item {
+    width: 30%; /* Largeur pour écran normal */
+    height: 300px; /* Augmenter la hauteur des podiums */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Aligner les éléments en haut */
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    padding: 20px; /* Pour éviter que le texte soit collé au bord */
+    text-align: center; /* Centre le texte */
+    margin-bottom: 20px; /* Ajoute de l'espace entre les éléments */
+    margin-top: 20px; /* Ajoute de l'espace au-dessus de chaque élément */
+    transition: transform 0.3s ease; /* Animation au survol */
+}
+
+.podium-item .cryptocurrency-name {
+    margin-top: 60px; /* Descendre les noms des cryptomonnaies */
+}
+
+.podium-item:hover {
+    transform: scale(1.05); /* Agrandissement au survol */
+}
+
+.podium-item.gold {
+    background-color: aqua;
+}
+
+.podium-item.silver {
+    background-color: aqua;
+}
+
+.podium-item.bronze {
+    background-color: aqua;
+}
+
+.summary {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: black; /* Couleur de fond noire pour le résumé */
+    border-radius: 5px;
+    width: 90%; /* Ajustez la largeur selon vos besoins */
+    margin: 0 auto; /* Centrer le résumé à l'intérieur du token */
+    text-align: left; /* Aligner le texte à gauche */
+    display: none; /* Masquer par défaut */
+}
+
+/* Styles pour le mode sombre */
+body.black-and-white {
+    background-color: black; /* Fond noir */
+    color: white; /* Texte blanc */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Transition en mode sombre */
+}
+
+.podium-item.black-and-white {
+    background-color: #444; /* Arrière-plan gris foncé pour les items en mode sombre */
+    color: white; /* Texte blanc */
+}
+
+/* Styles pour le rang */
+.rank {
+    font-size: 24px; /* Taille de police pour le rang */
+    font-weight: bold; /* Mettre le texte en gras */
+    position: absolute;
+    top: 10px; /* Positionner en haut de l'item */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff; /* Couleur par défaut */
+}
+
+/* Couleurs spécifiques pour les rangs */
+.podium-item.gold .rank {
+    color: white; /* Couleur pour la 1ère place */
+}
+
+.podium-item.silver .rank {
+    color: white; /* Couleur pour la 2ème place */
+}
+
+.podium-item.bronze .rank {
+    color: white; /* Couleur pour la 3ème place (bronze) */
+}
+
+.mode-toggle button {
+    background-color: aqua; /* Couleur de fond du bouton */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px; /* Padding pour le bouton */
+    cursor: pointer; /* Curseur de pointeur pour le bouton */
+    transition: background-color 0.3s ease; /* Transition de couleur du bouton */
+}
+
+.mode-toggle button:hover {
+    background-color: aqua; /* Couleur du bouton au survol */
+}
+
+/* Style pour les noms des cryptomonnaies */
+.cryptocurrency-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: black; /* Couleur par défaut en mode clair */
+}
+
+/* Styles pour le mode sombre */
+body.black-and-white .cryptocurrency-name {
+    color: beige; /* Couleur beige pour le mode sombre */
+}
+
+/* Style pour le titre en fonction du mode */
+.title h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: black; /* Par défaut, le texte est noir en mode clair */
+    transition: color 0.3s ease; /* Transition pour le mode sombre */
+}
+
+/* Quand le mode sombre est activé */
+body.black-and-white .title h1 {
+    color: beige; /* Le texte devient beige en mode sombre */
+}
+
+.separator {
+    border: none;
+    height: 5px;
+    background-color: #ccc; /* Couleur du trait */
+    margin: 50px 0; /* Espace au-dessus et en dessous du trait */
+    width: 80%; /* Largeur du trait */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.charts-section {
+    text-align: center;
+    margin-top: 40px;
+
+}
+
+.charts-section canvas {
+    width: 100% !important; /* Assure que le canvas prend toute la largeur */
+    height: 400px !important; /* Garde l'aspect ratio */
+    max-width: 600px; /* Limite la largeur maximale si nécessaire */
+    margin: 20px auto; /* Centrer le canvas */
+}
+
+/* Ajout pour cacher les éléments au départ */
+.hidden {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+/* Affichage progressif */
+.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
