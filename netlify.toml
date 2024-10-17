@@ -1,2 +1,7 @@
 [build]
   publish = "public"  # Le dossier contenant les fichiers à déployer
+
+[[redirects]]
+  from = "/*"
+  to = "/podium.html"
+  status = 200
