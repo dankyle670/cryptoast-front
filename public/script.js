@@ -28,7 +28,7 @@ function showSummary(token) {
     summary.style.display = 'block';
 }
 
-// handling balck and white mode function
+// handling black and white mode function
 function toggleMode()
 {
     const body = document.body;
@@ -39,12 +39,9 @@ function toggleMode()
 }
 
 // create chart function
-function createChart(ctx, label, data, color, token)
+function createChart(ctx, label, data, color)
 {
-    if (charts[token])
-        charts[token].destroy();
-
-    charts[token] = new Chart(ctx, {
+    return new Chart(ctx, {
         type: 'line',
         data: {
             labels: label,
@@ -53,7 +50,9 @@ function createChart(ctx, label, data, color, token)
                 data: data,
                 borderColor: color,
                 fill: false,
-                tension: 0.1
+                tension: 0.1,
+                pointBackgroundColor: color,
+                pointBorderColor: color
             }]
         },
         options: {
@@ -64,14 +63,35 @@ function createChart(ctx, label, data, color, token)
                     display: true,
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: 'Date',
+                        color: 'black'
+                    },
+                    ticks: {
+                        color: 'black'
+                    },
+                    grid: {
+                        color: 'black'
                     }
                 },
                 y: {
                     display: true,
                     title: {
                         display: true,
-                        text: 'Prix (USD)'
+                        text: 'Prix (USD)',
+                        color: 'black'
+                    },
+                    ticks: {
+                        color: 'black'
+                    },
+                    grid: {
+                        color: 'black'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'black'
                     }
                 }
             }
@@ -79,7 +99,7 @@ function createChart(ctx, label, data, color, token)
     });
 }
 
-// display token function 
+// display token function
 function showTokensSequentially()
 {
     const tokens = ['bitcoin', 'ethereum', 'ripple'];
@@ -110,29 +130,26 @@ function showChartsSequentially()
 async function createChartForToken(token, ctx)
 {
     const endDate = Math.floor(Date.now() / 1000);
-    const startDate = endDate - (60 * 60 * 24 * 60); // 60 day in sec
-
+    const startDate = endDate - (60 * 60 * 24 * 60); // 60 jours en secondes
     const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url=';
     const apiUrl = encodeURIComponent(`https://api.coingecko.com/api/v3/coins/${token}/market_chart/range?vs_currency=usd&from=${startDate}&to=${endDate}`);
 
+    if (charts[token])
+        charts[token].destroy();
     try {
         const response = await fetch(`${proxyUrl}${apiUrl}`);
         const data = await response.json();
-
         if (!data.prices) {
             console.error(`Pas de données reçues pour ${token}`);
             return;
         }
-
         const prices = data.prices.map(price => ({
             timestamp: new Date(price[0]).toLocaleDateString(),
             value: price[1]
         }));
-
         const labels = prices.map(price => price.timestamp);
         const values = prices.map(price => price.value);
-
-        createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green', token);
+        charts[token] = createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green');
     } catch (error) {
         console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
     }
@@ -145,13 +162,11 @@ async function fetchHistoricalData()
     const endDate = Math.floor(Date.now() / 1000);
     const startDate = endDate - (60 * 60 * 24 * 60);
     const proxyUrl = 'https://cryptoast-server.netlify.app/api/proxy?url=';
-
     const promises = tokens.map(async (token) => {
         try {
             const apiUrl = encodeURIComponent(`https://api.coingecko.com/api/v3/coins/${token}/market_chart/range?vs_currency=usd&from=${startDate}&to=${endDate}`);
             const response = await fetch(`${proxyUrl}${apiUrl}`);
             const data = await response.json();
-
             if (!data.prices) {
                 console.error(`Pas de données reçues pour ${token}`);
                 return;
@@ -163,7 +178,7 @@ async function fetchHistoricalData()
             const labels = prices.map(price => price.timestamp);
             const values = prices.map(price => price.value);
             const ctx = document.getElementById(`${token}Chart`).getContext('2d');
-            createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green', token);
+            charts[token] = createChart(ctx, labels, values, token === 'bitcoin' ? 'orange' : token === 'ethereum' ? 'blue' : 'green');
         } catch (error) {
             console.error(`Erreur lors de la récupération des données pour ${token}:`, error);
         }
@@ -176,7 +191,6 @@ window.onload = function() {
     setTimeout(() => {
         showChartsSequentially();
     }, 1500);
-
     // refresh each min
     setInterval(fetchHistoricalData, 60000);
 };
