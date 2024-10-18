@@ -176,48 +176,50 @@ body.black-and-white .title h1 {
     margin-top: 40px;
 }
 
+/* Modification de la taille des graphiques */
 .charts-section canvas {
     width: 100% !important;
-    height: 400px !important;
+    height: 300px !important; /* Réduire la hauteur des graphiques */
     max-width: 600px;
     margin: 20px auto;
-}
-
-.hidden {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s, transform 0.5s;
-}
-
-.show {
-    opacity: 1;
-    transform: translateY(0);
+    padding: 0 10px; /* Ajouter du padding pour éviter que le canvas touche le bord */
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .mode-toggle {
         position: absolute;
-        top: 10px;
+        top: 10px; /* Positionné au-dessus du titre */
         right: 20px;
         z-index: 100;
     }
 
     .title {
-        margin-top: 60px;
+        margin-top: 60px; /* Ajout d'un espace au-dessus du titre pour le bouton */
     }
 
     .title h1 {
-        font-size: 24px;
-        margin-bottom: 10px;
+        font-size: 24px; /* Réduire la taille de la police */
+        margin-bottom: 10px; /* Ajuster la marge en bas */
     }
 
     .podium {
-        flex-direction: column;
-        padding: 0;
+        flex-direction: column; /* Empiler les éléments en colonne pour mobile */
+        padding: 0; /* Retirer le padding */
     }
 
     .podium-item {
-        width: 100%;
+        width: 100%; /* Les items prennent toute la largeur */
+        height: auto; /* Ajuste la hauteur pour que le contenu s'adapte */
+        margin-bottom: 10px; /* Réduit la marge en bas */
+    }
+
+    .charts-section {
+        padding: 0 20px; /* Ajout d'un padding pour éviter que le canvas ne touche le bord */
+    }
+
+    .charts-section canvas {
+        height: 300px !important; /* Hauteur ajustée des graphiques pour mobile */
+        max-height: 400px; /* Limiter la hauteur maximale pour une meilleure lisibilité */
     }
 }
